@@ -1,0 +1,29 @@
+/* Write your CSS here */
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-image: linear-gradient(#fbc7d4, #9796f0);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.bg-container {
+  height: 70vh;
+  width: 80vw;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 50px;
+}
+.two-container {
+  display: flex;
+  justify-content: space-between;
+}
+.imgEle {
+  height: 30vh;
+}
+.appointment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
