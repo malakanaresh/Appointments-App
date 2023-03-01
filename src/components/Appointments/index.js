@@ -10,7 +10,12 @@ import './index.css'
 import AppointmentItem from '../AppointmentItem'
 
 class Appointments extends Component {
-  state = {title: '', date: '', contactsList: []}
+  state = {
+    title: '',
+    date: '1998 - 02 - 02',
+    contactsList: [],
+    starred: false,
+  }
 
   addButton = event => {
     event.preventDefault()
@@ -24,6 +29,8 @@ class Appointments extends Component {
 
     this.setState(prevState => ({
       contactsList: [...prevState.contactsList, newContact],
+      title: '',
+      date: '',
     }))
   }
 
@@ -39,21 +46,27 @@ class Appointments extends Component {
   }
 
   onChangeTitle = event => {
-    this.setState({title: event.target.value})
+    const newTitle = event.target.value === ' ' ? 'naresh' : event.target.value
+    this.setState({title: newTitle})
   }
 
   onChangeDate = event => {
-    this.setState({date: event.target.value})
+    console.log(event.target.value)
+    this.setState({
+      date: format(new Date(event.target.value), 'dd MMMM yyyy, EEEE'),
+    })
   }
 
   onDemandList = () => {
-    const {contactsList} = this.state
-    const tb = contactsList.filter(eachStar => eachStar.isFavorite === true)
-    this.setState({contactsList: tb})
+    const {starred} = this.state
+
+    this.setState(preveState => ({starred: !preveState.starred}))
   }
 
   render() {
-    const {title, date, contactsList} = this.state
+    const {title, date, contactsList, starred} = this.state
+    const tb = contactsList.filter(eachStar => eachStar.isFavorite === true)
+    const newContactsList = starred ? tb : contactsList
 
     return (
       <div className="container">
@@ -71,7 +84,7 @@ class Appointments extends Component {
               <input id="date" type="date" onChange={this.onChangeDate} />
               <br />
 
-              <button data-testid="star" type="submit" onClick={this.addButton}>
+              <button type="submit" onClick={this.addButton}>
                 Add
               </button>
             </form>
@@ -93,7 +106,7 @@ class Appointments extends Component {
             </div>
 
             <ul>
-              {contactsList.map(eachOne => (
+              {newContactsList.map(eachOne => (
                 <AppointmentItem
                   key={eachOne.id}
                   eachDetails={eachOne}
